@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
       }}
     >
       <html lang="en">
-        <body className={`${inter.className}`}>
+        <body className={`${inter.className} dotted-background`}>
           <ClientThemeProvider>
             <Header />
             <main className="min-h-screen"> {children}</main>
