@@ -1,4 +1,7 @@
+"use client";
+
 import { UserButton } from "@clerk/nextjs";
+import { ChartNoAxesGhantt } from "lucide-react";
 
 const UserMenu = () => {
   return (
@@ -8,7 +11,15 @@ const UserMenu = () => {
           avatarBox: "w-10 h-10",
         },
       }}
-    ></UserButton>
+    >
+      <UserButton.MenuItems>
+        <UserButton.Link
+          label="My Organisations"
+          labelIcon={<ChartNoAxesGhantt size={15} />}
+          href="/onboarding"
+        />
+      </UserButton.MenuItems>
+    </UserButton>
   );
 };
 
