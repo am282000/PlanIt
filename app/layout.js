@@ -1,4 +1,4 @@
-import ClientThemeProvider from "@/components/ClientThemeProvider";
+import ClientThemeProvider from "@/components/client-theme-provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/header";
