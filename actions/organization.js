@@ -1,10 +1,9 @@
 /*
- * To fetch organization details -
- ** Get userId from Clerk Login
- ** Get user detials for User Table
- ** Get organization detials , and members of it
- ** If authntic user and associated with organization return organization
- *  */
+ * Get userId from Clerk Login
+ * Get user detials for User Table
+ * Get organization detials , and members of it
+ * If authntic user and associated with organization return organization
+ * */
 
 "use server";
 import { db } from "@/lib/prisma";
