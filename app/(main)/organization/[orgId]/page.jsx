@@ -3,9 +3,9 @@ import OrgSwitcher from "@/components/org-switcher";
 import ProjectList from "./_components/project-list";
 
 const Organization = async ({ params }) => {
-  const { orgId } = params;
+  const { orgId } = await params;
   const organization = await getOrganization(orgId);
-  console.log("Organization: ", organization);
+  // console.log("Organization: ", organization);
 
   if (!organization) {
     return <div>No Organization Found</div>;

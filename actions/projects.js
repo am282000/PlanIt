@@ -70,3 +70,30 @@ export async function getProjects(orgId) {
   });
   return projects;
 }
+
+/*
+ * Check use , orgId is related to Project , and role is admin than only delete
+ */
+export async function deleteProject(projectId) {
+  const { userId, orgId, orgRole } = auth();
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized User");
+  }
+  if (orgRole !== "org:admin") {
+    throw new Error("Only organization admins can delete the project");
+  }
+  const project = await db.project.findUnique({
+    where: {
+      id: projectId,
+    },
+  });
+  if (!project || project.organizationId !== orgId) {
+    throw new Error(
+      "Project not found or you don't have permission to delete it"
+    );
+  }
+  await db.project.delete({
+    where: { id: projectId },
+  });
+  return { success: true };
+}
