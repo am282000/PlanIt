@@ -18,8 +18,8 @@ const Onboarding = () => {
     <div className="flex justify-center items-center pt-14">
       <OrganizationList
         hidePersonal
-        afterCreateOrganizationUrl="/organization/:slug`"
-        afterSelectOrganizationUrl="`/organization/:slug`"
+        afterCreateOrganizationUrl="/organization/:slug"
+        afterSelectOrganizationUrl="/organization/:slug"
       />
     </div>
   );
