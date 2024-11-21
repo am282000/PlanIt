@@ -37,7 +37,7 @@ export async function createProject(data) {
         organizationId: orgId,
       },
     });
-    console.log("project: ", project);
+    // console.log("project: ", project);
     return project;
   } catch (error) {
     throw new Error("Error creating Project: " + error.message);
@@ -104,7 +104,7 @@ export async function deleteProject(projectId) {
 export async function getProject(projectId) {
   // console.log("projectId: ", projectId, auth());
 
-  const { userId, orgId } =  auth();
+  const { userId, orgId } = auth();
   if (!userId || !orgId) {
     throw new Error("Unauthorized User");
   }
