@@ -54,7 +54,7 @@ export async function getProjects(orgId) {
     throw new Error("Unauthorized User");
   }
 
-  const user = db.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
       clerkUserId: userId,
     },
@@ -96,4 +96,43 @@ export async function deleteProject(projectId) {
     where: { id: projectId },
   });
   return { success: true };
+}
+
+/**
+ * Get project and sprints in it using project id
+ */
+export async function getProject(projectId) {
+  // console.log("projectId: ", projectId, auth());
+
+  const { userId, orgId } =  auth();
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized User");
+  }
+  const user = await db.user.findUnique({
+    where: {
+      clerkUserId: userId,
+    },
+  });
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const project = await db.project.findUnique({
+    where: {
+      id: projectId,
+    },
+    include: {
+      sprints: {
+        orderBy: { createdAt: "desc" },
+      },
+    },
+  });
+  if (!project) {
+    return null;
+  }
+
+  //Verify project belongs to the organization
+  if (project.organizationId !== orgId) {
+    return null;
+  }
+  return project;
 }
