@@ -45,3 +45,42 @@ export async function getOrganization(slug) {
   // console.log("Authentic User: ", organization, memberDetail);
   return organization;
 }
+
+/**
+ * GetOrganizationUsers - To fetch all user in an org
+ * Check for Unauthorised users
+ * Fetch user detials from user table
+ * Organization member list - collect ids
+ * Find all users detials from user table
+ */
+
+export async function getOrganizationUsers(orgId) {
+  const { userId } = auth();
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized User");
+  }
+  const user = await db.user.findUnique({
+    where: {
+      clerkClientId: userId,
+    },
+  });
+  if (!user) {
+    throw new Error("User not Found");
+  }
+  const organizationMembersDetails =
+    await clerkClient().organizations.getOrganizationMembershipList({
+      organizationId: orgId,
+    });
+
+  const userIds = organizationMembersDetails.data.map(
+    (membership) => membership.publicUserData.userId
+  );
+  const users = await db.user.findMany({
+    where: {
+      clerkUserId: {
+        id: userIds,
+      },
+    },
+  });
+  return users;
+}
