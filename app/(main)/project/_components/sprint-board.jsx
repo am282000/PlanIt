@@ -71,8 +71,6 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
       reOrderedCards.forEach((card, index) => {
         card.order = index;
       });
-      const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
-      setIssues(newOrderedData, sortedIssues);
     } else {
       //Move card in different column
       const [movedCard] = sourceList.splice(source.index, 1);
@@ -86,11 +84,9 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
       destinationList.forEach((card, index) => {
         card.order = index;
       });
-      console.log("newOrderedData", newOrderedData);
-
-      const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
-      setIssues(newOrderedData, sortedIssues);
     }
+    const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
+    setIssues(newOrderedData, sortedIssues);
   };
 
   const {
