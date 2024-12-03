@@ -10,6 +10,14 @@ import useFetch from "@/hooks/use-fetch";
 import { getIssuesForSprint } from "@/actions/issues";
 import { BeatLoader } from "react-spinners";
 import IssueCard from "@/components/isssue-card";
+import { toast } from "sonner";
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
 
 const SprintBoard = ({ sprints, projectId, orgId }) => {
   const defaultSprint =
@@ -18,7 +26,72 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(null);
 
-  const onDragEnd = () => {};
+  const onDragEnd = async (result) => {
+    if (currentSprint.status === "PLANNED") {
+      toast.warning("Start the sprint to update the board");
+      return;
+    }
+    if (currentSprint.status === "COMPLETED") {
+      toast.warning("Cannot update board after sprint end ");
+      return;
+    }
+    const { source, destination } = result;
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const newOrderedData = [...issues];
+    const sourceList = newOrderedData.filter(
+      (list) => list.status === source.droppableId
+    );
+    const destinationList = newOrderedData.filter(
+      (list) => list.status === destination.droppableId
+    );
+    console.log(
+      "result: ",
+      result,
+      newOrderedData,
+      sourceList,
+      destinationList
+    );
+
+    // Reorder in Same column
+    if (source.droppableId === destination.droppableId) {
+      const reOrderedCards = reorder(
+        sourceList,
+        source.index,
+        destination.index
+      );
+      reOrderedCards.forEach((card, index) => {
+        card.order = index;
+      });
+      const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
+      setIssues(newOrderedData, sortedIssues);
+    } else {
+      //Move card in different column
+      const [movedCard] = sourceList.splice(source.index, 1);
+      movedCard.status = destination.droppableId;
+      destinationList.splice(destination.index, 1, movedCard);
+
+      // For Sorting update order in SourceList/ DestinationList on order
+      sourceList.forEach((card, index) => {
+        card.order = index;
+      });
+      destinationList.forEach((card, index) => {
+        card.order = index;
+      });
+      console.log("newOrderedData", newOrderedData);
+
+      const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
+      setIssues(newOrderedData, sortedIssues);
+    }
+  };
 
   const {
     data: issues,
@@ -75,25 +148,27 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                     {/* Issues */}
                     {issues
                       ?.filter((issue) => issue.status === column.key)
-                      .map((issue, index) => (
-                        <Draggable
-                          key={issue.id}
-                          draggableId={issue.id}
-                          index={index}
-                        >
-                          {(provided) => {
-                            return (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                {...provided.dragHandleProps}
-                              >
-                                <IssueCard issue={issue} />
-                              </div>
-                            );
-                          }}
-                        </Draggable>
-                      ))}
+                      .map((issue, index) => {
+                        return (
+                          <Draggable
+                            key={issue.id}
+                            draggableId={issue.id}
+                            index={index}
+                          >
+                            {(provided) => {
+                              return (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <IssueCard issue={issue} />
+                                </div>
+                              );
+                            }}
+                          </Draggable>
+                        );
+                      })}
                     {provided.placeholder}
                     {column.key === "TODO" &&
                       currentSprint.status !== "COMPLETED" && (
