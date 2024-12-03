@@ -61,7 +61,7 @@ export async function getOrganizationUsers(orgId) {
   }
   const user = await db.user.findUnique({
     where: {
-      clerkClientId: userId,
+      clerkUserId: userId,
     },
   });
   if (!user) {
@@ -78,7 +78,7 @@ export async function getOrganizationUsers(orgId) {
   const users = await db.user.findMany({
     where: {
       clerkUserId: {
-        id: userIds,
+        in: userIds,
       },
     },
   });
