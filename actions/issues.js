@@ -5,6 +5,7 @@
  * Create new issue
  */
 
+"use server";
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
@@ -15,7 +16,7 @@ export async function createIssue(projectId, data) {
   }
   const user = await db.user.findUnique({
     where: {
-      clerkClientId: userId,
+      clerkUserId: userId,
     },
   });
 
@@ -48,4 +49,25 @@ export async function createIssue(projectId, data) {
     },
   });
   return issue;
+}
+
+/**
+ * GET all issues for a sprint
+ * Sort them in ascending using priority and order - possible only with @@index([status, order])
+ */
+export async function getIssuesForSprint(sprintId) {
+  const { userId, orgId } = auth();
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized User");
+  }
+  const issues = await db.issue.findMany({
+    where: { sprintId },
+    orderBy: [{ status: "asc" }, { order: "asc" }],
+    include: {
+      assignee: true,
+      reporter: true,
+    },
+  });
+
+  return issues;
 }
