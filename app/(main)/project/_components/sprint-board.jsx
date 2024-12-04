@@ -105,7 +105,10 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
     fn: fetchIssues,
     setData: setIssues,
   } = useFetch(getIssuesForSprint);
-  const [filterdIssues, setFilterdIssues] = useState(issues);
+  const [filteredIssues, setFilteredIssues] = useState(issues);
+  const handleFilterChange = (newFilteredIssues) => {
+    setFilteredIssues(newFilteredIssues);
+  };
 
   useEffect(() => {
     if (currentSprint.id) {
@@ -120,6 +123,12 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
   const handleAddIssue = (status) => {
     setSelectedStatus(status);
     setIsDrawerOpen(true);
+  };
+
+  const updateIssue = (updated) => {
+    setIssues((issues) =>
+      issues.map((issue) => (issue.id === updated.id ? updated : issue))
+    );
   };
 
   if (issuesError) return <div>Error loading Issues</div>;
@@ -171,7 +180,13 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
-                                  <IssueCard issue={issue} />
+                                  <IssueCard
+                                    issue={issue}
+                                    onDelete={() =>
+                                      fetchIssues(currentSprint.id)
+                                    }
+                                    onUpdate={(updated) => updateIssue(updated)}
+                                  />
                                 </div>
                               );
                             }}
