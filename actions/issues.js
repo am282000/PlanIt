@@ -147,3 +147,43 @@ export async function deleteIssue(issueId) {
 
   return { success: true };
 }
+
+/**
+ * Update issue - Check for unauthorized user
+ * Find issue with project true
+ * Check for issue organizations and our current organization
+ * Update Status, priority of isssue , include reporter,assignee as well
+ */
+
+export async function updateIssue(issueId, data) {
+  const { userId, orgId } = auth();
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized User");
+  }
+  try {
+    const issue = await db.issue({
+      where: { id: issueId },
+      include: { project: true },
+    });
+    if (!issue) {
+      throw new Error("No issue found");
+    }
+    if (issue.project.organizationId !== orgId) {
+      throw new Error("Unauthorized User");
+    }
+    const updatedIssue = await db.issue.update({
+      where: { id: issueId },
+      data: {
+        status: data.status,
+        priority: data.priority,
+      },
+      include: {
+        reporter: true,
+        assignee: true,
+      },
+    });
+    return updatedIssue;
+  } catch (error) {
+    throw new Error("Error updating issue: " + error.message);
+  }
+}
