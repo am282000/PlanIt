@@ -7,7 +7,7 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CreateIssueDrawer from "./create-issue";
 import useFetch from "@/hooks/use-fetch";
-import { getIssuesForSprint } from "@/actions/issues";
+import { getIssuesForSprint, UpdateIssueOrder } from "@/actions/issues";
 import { BeatLoader } from "react-spinners";
 import IssueCard from "@/components/isssue-card";
 import { toast } from "sonner";
@@ -25,6 +25,12 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
   const [currentSprint, setCurrentSprint] = useState(defaultSprint);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(null);
+
+  const {
+    loading: updateIssueOrderLoading,
+    error: updateIssueOrderError,
+    fn: updateIssueOrderFn,
+  } = useFetch(UpdateIssueOrder);
 
   const onDragEnd = async (result) => {
     if (currentSprint.status === "PLANNED") {
@@ -87,6 +93,9 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
     }
     const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
     setIssues(newOrderedData, sortedIssues);
+
+    //API call
+    updateIssueOrderFn(sortedIssues);
   };
 
   const {
@@ -123,7 +132,10 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
         sprints={sprints}
         projectId={projectId}
       />
-      {issuesLoading && (
+      {updateIssueOrderError && (
+        <p className="text-red-500 mt-2"> {updateIssueOrderError.message}</p>
+      )}
+      {(issuesLoading || updateIssueOrderLoading) && (
         <BeatLoader className="mt-4" width={"100%"} color="#36d7b7" />
       )}
       {/* KANBAN BOARD */}
