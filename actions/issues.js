@@ -161,7 +161,7 @@ export async function updateIssue(issueId, data) {
     throw new Error("Unauthorized User");
   }
   try {
-    const issue = await db.issue({
+    const issue = await db.issue.findUnique({
       where: { id: issueId },
       include: { project: true },
     });
