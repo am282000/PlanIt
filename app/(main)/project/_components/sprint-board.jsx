@@ -11,6 +11,7 @@ import { getIssuesForSprint, UpdateIssueOrder } from "@/actions/issues";
 import { BeatLoader } from "react-spinners";
 import IssueCard from "@/components/isssue-card";
 import { toast } from "sonner";
+import BoardFilters from "./board-filters";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -141,6 +142,9 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
         sprints={sprints}
         projectId={projectId}
       />
+      {issues && !issuesLoading && (
+        <BoardFilters issues={issues} onFilterChange={handleFilterChange} />
+      )}
       {updateIssueOrderError && (
         <p className="text-red-500 mt-2"> {updateIssueOrderError.message}</p>
       )}
@@ -163,7 +167,7 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                       {column.name}
                     </h3>
                     {/* Issues */}
-                    {issues
+                    {filteredIssues
                       ?.filter((issue) => issue.status === column.key)
                       .map((issue, index) => {
                         return (
