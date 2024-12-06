@@ -1,13 +1,15 @@
 # PlanIt Documentation
 
 1. **UI/UX Preview**
+
    - Place your screenshots or videos showing the user interface and overall design.
 
 2. **Features in Action**
+
    - Include screenshots or videos demonstrating key features, such as issue creation, Kanban board, and dynamic routing.
 
 3. **Project Walkthrough**
-  [![Video Title](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=Vsx9a7-IXX4&list=PLRv_c3P0AbXlOMX25nFBlBsZlOdBXqH4Q&index=4)
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=Vsx9a7-IXX4&list=PLRv_c3P0AbXlOMX25nFBlBsZlOdBXqH4Q&index=4" frameborder="0" allowfullscreen></iframe>
 
 4. **Kanban Board Demo**
    - Show the drag-and-drop functionality and the management of issues in the Kanban board.
@@ -52,21 +54,25 @@
 ## Features for Users
 
 ### 1. **Organizations**
+
 - Create and manage organizations with up to 5 members.
 - Admins can assign roles (Admin, Member), invite users, and manage permissions.
 - Redirect unauthorized users to onboarding if no organization exists.
 
 ### 2. **Projects**
+
 - Admins create projects, validate using React Hook Form and Zod.
 - Projects can be updated or deleted (with confirmation).
 - Custom hooks manage loading states, errors, and toast notifications.
 
 ### 3. **Sprints**
+
 - Sprints automatically named, default duration is 14 days.
 - Admins can start, end, or switch between sprints.
 - Sprint statuses: Planned, Active, Ended.
 
 ### 4. **Kanban Board**
+
 - Drag-and-drop support with `@hello-pangea/dnd`.
 - Cards can be rearranged within a column or moved between columns:
   - Update issue status and order during these actions.
@@ -79,7 +85,6 @@
 - **Issue Management**:
   - Create issues with a beautiful drawer interface using React-md-editor (Markdown support).
   - Default priority set to "Medium"; sorted by priority and order on the board.
-  
 - **Dynamic Data Handling**:
   - `getProjects`: Fetch projects associated with an organization.
   - `deleteProject`: Admin-only action with confirmation.
