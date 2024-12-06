@@ -9,7 +9,7 @@
    - Include screenshots or videos demonstrating key features, such as issue creation, Kanban board, and dynamic routing.
 
 3. **Project Walkthrough**
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=Vsx9a7-IXX4&list=PLRv_c3P0AbXlOMX25nFBlBsZlOdBXqH4Q&index=4" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v=Vsx9a7-IXX4&list=PLRv_c3P0AbXlOMX25nFBlBsZlOdBXqH4Q&index=4" frameborder="0" allowfullscreen></iframe>
 
 4. **Kanban Board Demo**
    - Show the drag-and-drop functionality and the management of issues in the Kanban board.
