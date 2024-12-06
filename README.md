@@ -1,88 +1,111 @@
-### PlanIt Documentation
+# PlanIt Documentation
 
-**Features:**
-- **Protected & Public Routes**: Implemented using middleware; unauthorized users are redirected to sign-in.
+1. **UI/UX Preview**
+   - Place your screenshots or videos showing the user interface and overall design.
+
+2. **Features in Action**
+   - Include screenshots or videos demonstrating key features, such as issue creation, Kanban board, and dynamic routing.
+
+3. **Project Walkthrough**
+  [![Video Title](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=Vsx9a7-IXX4&list=PLRv_c3P0AbXlOMX25nFBlBsZlOdBXqH4Q&index=4)
+
+4. **Kanban Board Demo**
+   - Show the drag-and-drop functionality and the management of issues in the Kanban board.
+
+## Features
+
+- **Protected & Public Routes**: Middleware ensures only authorized users can access certain routes.
 - **Dynamic Routing**:
   - `[[...sign-in]]`: Catch-all route for URLs following `/sign-in`.
-  - `(auth)`: Ignored as a route folder.
-  - `[orgId]`: Dynamic organization routes, e.g., `/organization/ashish`.
+  - `(auth)`: Ignores the folder as a route.
+  - `[orgId]`: Dynamic routes for organizations (e.g., `/organization/ashish`).
 - **Custom Pages**:
   - 404 Not Found Page.
   - React Spinners for loading states.
 
 ---
 
-**Tech Stack:**
+## Tech Stack
+
 - **Database**: PostgreSQL with Neon hosting.
 - **ORM**: Prisma for managing schemas, queries, and data.
-  - `npx prisma init` to initialize.
+  - `npx prisma init` for initialization.
   - `npx prisma generate` & `npx prisma migrate dev` for model creation and migrations.
 - **Backend**: Server Actions in Next.js for secure backend logic.
 
 ---
 
-**Database Design:**
-- **User Table**: Clerk provides user management; custom table includes `clerkUserId`.
+## Database Design
+
+- **User Table**: Clerk handles user management with a custom `clerkUserId` field.
 - **Organizations & Projects**:
-  - Separate organizations per user, each with unique keys (e.g., ECAL).
-  - Projects belong to organizations (`organizationId` foreign key).
-  - Projects have sprints (`projectId` as a foreign key).
-  - Issues linked to projects, sprints, and users via multiple foreign keys.
+  - Users can create multiple organizations with unique keys (e.g., ECAL).
+  - Projects are linked to organizations (`organizationId` foreign key).
+  - Projects have associated sprints (`projectId` as a foreign key).
+  - Issues can be linked to projects, sprints, and users via multiple foreign keys.
 - **Data Constraints**:
   - One unique key per organization.
-  - Cascade delete for projects, sprints, and related data.
+  - Cascade delete functionality ensures that deleting a project removes related sprints and issues.
 
 ---
 
-**Features for Users:**
-1. **Organizations**:
-   - Create organizations with up to 5 members.
-   - Manage roles (Admin, Member).
-   - Admins can update, delete, and invite members.
-2. **Projects**:
-   - Admins create projects with validation via React Hook Form and Zod.
-   - Projects can be updated or deleted (confirmations included).
-   - Custom hooks handle loading, error states, and toasts.
-3. **Sprints**:
-   - Automatically named, 14-day duration by default.
-   - Sprint management: start, end, and switch between sprints.
-   - Status management (e.g., Planned, Active, Ended).
-4. **Kanban Board**:
-   - Drag-and-drop using `@hello-pangea/dnd`.
-   - Rearrange cards within a column or move between columns:
-     - Update status and order.
-     - Handle edge cases for Planned or Completed sprints.
-   - Issues include title, status, priority, and assignee.
+## Features for Users
+
+### 1. **Organizations**
+- Create and manage organizations with up to 5 members.
+- Admins can assign roles (Admin, Member), invite users, and manage permissions.
+- Redirect unauthorized users to onboarding if no organization exists.
+
+### 2. **Projects**
+- Admins create projects, validate using React Hook Form and Zod.
+- Projects can be updated or deleted (with confirmation).
+- Custom hooks manage loading states, errors, and toast notifications.
+
+### 3. **Sprints**
+- Sprints automatically named, default duration is 14 days.
+- Admins can start, end, or switch between sprints.
+- Sprint statuses: Planned, Active, Ended.
+
+### 4. **Kanban Board**
+- Drag-and-drop support with `@hello-pangea/dnd`.
+- Cards can be rearranged within a column or moved between columns:
+  - Update issue status and order during these actions.
+  - Handle edge cases for Planned or Completed sprints.
 
 ---
 
-**Key Functionalities:**
+## Key Functionalities
+
 - **Issue Management**:
-  - Create issues with a drawer interface (Markdown editor included).
-  - Default priority is "Medium"; sorted by priority and order on the board.
+  - Create issues with a beautiful drawer interface using React-md-editor (Markdown support).
+  - Default priority set to "Medium"; sorted by priority and order on the board.
+  
 - **Dynamic Data Handling**:
-  - `getProjects`: Fetch all projects in an organization.
-  - `deleteProject`: Admin-only action with confirmation popups.
-  - Fetch sprint statuses and lengths dynamically.
-  - `getOrganizationUsers`: Fetch organization members for issue assignment.
+  - `getProjects`: Fetch projects associated with an organization.
+  - `deleteProject`: Admin-only action with confirmation.
+  - Fetch sprint statuses and issue lengths dynamically.
+  - `getOrganizationUsers`: Fetch members for issue assignment.
 
 ---
 
-**Optimizations:**
-- **Prisma Client**: Resolved Vite’s hot-reloading issue by using `globalThis.prisma` to reuse Prisma clients in development mode.
-- **React Hook Form + Zod**: Integrated validation for cleaner forms and reduced errors.
-- **Suspense Fallback**: Bar loader while data (e.g., project by ID) is loading.
+## Optimizations
+
+- **Prisma Client**: Addressed Vite’s hot-reloading issue by using `globalThis.prisma` to avoid creating multiple Prisma clients in development mode.
+- **React Hook Form & Zod**: Integrated form validation to avoid unnecessary errors.
+- **Suspense Fallback**: Display a bar loader while waiting for data (e.g., project by ID).
 
 ---
 
-**Challenging Work:**
-- Implementing drag-and-drop in Kanban for real-time board updates.
-- Handling complex sprint and issue workflows, ensuring smooth state transitions (e.g., Planned → Active → Ended).
-- Streamlined cascading deletes for maintaining data integrity.
+## Challenging Work
+
+- **Drag-and-Drop**: Implementing real-time updates for the Kanban board.
+- **Complex Sprint & Issue Workflows**: Managing transitions (e.g., from Planned to Active) while maintaining integrity.
+- **Cascading Deletes**: Ensuring data integrity when deleting projects or sprints.
 
 ---
 
-**Example Code (Drag-and-Drop):**
+## Example Code (Drag-and-Drop)
+
 ```javascript
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -125,3 +148,83 @@ const BasicDragDrop = () => {
 
 export default BasicDragDrop;
 ```
+
+---
+
+## Routing
+
+- **Protected & Public Routes**: Implemented using middleware to protect routes based on authentication.
+- **Catch-All Routes**: Use `[[...sign-in]]` for routes that follow `/sign-in`.
+- **Ignore Folder as Route**: Use `(auth)` to prevent a folder from being treated as a route.
+
+---
+
+## Database & Prisma ORM
+
+- **Organizations**: Managed through Clerk for user authentication and organization creation.
+- **Database**: PostgreSQL hosted on Neon.
+- **Prisma ORM**: Used for database communication, including schema management and querying.
+  - Connection string stored in `.env`.
+  - User tables initialized with `clerkUserId`.
+  - Cascade delete for projects, sprints, and issues.
+
+---
+
+## Dynamic Routes
+
+- **Example**: `/organization/ashish` where `[orgId]` is dynamic.
+- **Routing Syntax**:
+  - `ignoreRoute`: Ignores a folder from being treated as a route.
+  - `[[...catchAll]]`: Catches all routes following a certain path.
+
+---
+
+## User Management
+
+- **Organization Management**: Admins can create organizations, assign roles, and invite members.
+- **Protected Routes**: Redirect to onboarding if no organization exists.
+- **Role Management**: Only admins can manage projects and members.
+
+---
+
+## Forms & Validation
+
+- **React Hook Form & Zod**: Used to handle forms with validation and error management.
+- **Custom Hooks**: Manage loading, error states, and data storage.
+
+---
+
+## Project & Sprint Management
+
+- **Create & Manage Projects**: Only admins can create projects. Projects can be updated and deleted.
+- **Sprints**: Default to 14-day duration, with admins controlling start, end, and status changes.
+
+---
+
+## Issue Management & Kanban Board
+
+- **Kanban Board**: Issues are managed with drag-and-drop functionality.
+- **Issue Movement**: Cards can be rearranged within the column or moved between columns, updating their status and order.
+- **Priority Sorting**: Issues sorted by priority on the board.
+
+---
+
+## Transactions
+
+- **Issue Updates**: Using transactions to ensure API operations are atomic.
+- **Issue Deletion**: Reporters or admins can delete issues; others cannot change priority.
+
+---
+
+## UI/UX
+
+- **Issue Details**: Click on a card to view and manage issue details.
+- **Dynamic Routing**: Redirect to a project page if necessary.
+- **Issue Filtering**: Filter issues by title, assignee, or priority.
+
+---
+
+## Deployment
+
+- **Deployment**: Deployed using Vercel with Prisma integration.
+- **Environment Variables**: Set required keys in `.env` for deployment.
