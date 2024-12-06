@@ -187,3 +187,39 @@ export async function updateIssue(issueId, data) {
     throw new Error("Error updating issue: " + error.message);
   }
 }
+
+/**
+ * Get User Issue - Authorized users
+ * Issue in this org, either assigned to user or reported by user
+ */
+export async function getUserIssues(userId) {
+  const { orgId } = auth();
+  if (!userId || !orgId) {
+    throw new Error("Unauthorized User");
+  }
+  const user = await db.user.findUnique({
+    where: {
+      clerkUserId: userId,
+    },
+  });
+  if (!user) {
+    throw new Error("User not Found");
+  }
+  const userIssues = await db.issue.findMany({
+    where: {
+      OR: [{ assigneeId: user.id }, { reporterId: user.id }],
+      project: {
+        organizationId: orgId,
+      },
+    },
+    include: {
+      project: true,
+      assignee: true,
+      reporter: true,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
+  return userIssues;
+}
