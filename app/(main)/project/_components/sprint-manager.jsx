@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import useFetch from "@/hooks/use-fetch";
 import { isAfter, isBefore, format, formatDistanceToNow } from "date-fns";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 
@@ -19,6 +20,8 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
   const now = new Date();
   const startDate = new Date(sprint.startDate);
   const endDate = new Date(sprint.endDate);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   //   Now is after START , and before END
   const canStart =
@@ -47,10 +50,23 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
     }
   }, [updatedStatus, loading]);
 
+  useEffect(() => {
+    const sprintId = searchParams.get("sprint");
+    if (sprintId && sprintId !== sprint.id) {
+      const selectedSprint = sprints.find((sprint) => sprint.id === sprintId);
+
+      if (selectedSprint) {
+        setSprint(selectedSprint);
+        setStatus(selectedSprint.status);
+      }
+    }
+  }, [searchParams, sprints]);
+
   const handleSprintChange = (sprintId) => {
     const selectedSprint = sprints.find((s) => s.id === sprintId);
     setSprint(selectedSprint);
     setStatus(selectedSprint.status);
+    router.replace(`/project/${projectId}`, undefined, { shallow: true });
   };
   const getStatusText = () => {
     if (status === "COMPLETED") {
