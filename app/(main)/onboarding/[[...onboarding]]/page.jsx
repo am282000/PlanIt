@@ -1,12 +1,12 @@
 "use client";
 
-import { OrganizationList, useOrganization } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { OrganizationList } from "@clerk/nextjs";
+// import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
 
 const Onboarding = () => {
-  const { organization } = useOrganization();
-  const router = useRouter();
+  // const { organization } = useOrganization();
+  // const router = useRouter();
   /* Auto Redirect to organization logic - causing issue */
   // useEffect(() => {
   //   console.log("organization: ", organization);
