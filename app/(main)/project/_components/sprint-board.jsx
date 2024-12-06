@@ -9,7 +9,7 @@ import CreateIssueDrawer from "./create-issue";
 import useFetch from "@/hooks/use-fetch";
 import { getIssuesForSprint, UpdateIssueOrder } from "@/actions/issues";
 import { BeatLoader } from "react-spinners";
-import IssueCard from "@/components/isssue-card";
+import IssueCard from "@/components/issue-card";
 import { toast } from "sonner";
 import BoardFilters from "./board-filters";
 
