@@ -5,8 +5,7 @@
    - Place your screenshots or videos showing the user interface and overall design.
 
 2. **Features in Action**
-
-   - Include screenshots or videos demonstrating key features, such as issue creation, Kanban board, and dynamic routing.
+  ![](public/docs/pic1.png)
 
 3. **Project Walkthrough**
    ![](public/docs/MixtureOpen.gif)
@@ -49,6 +48,8 @@
   - One unique key per organization.
   - Cascade delete functionality ensures that deleting a project removes related sprints and issues.
 
+- **ER Diagram** 
+[View on Eraser![](https://app.eraser.io/workspace/xrstnVdrGQO6WDR9CsNM/preview?elements=WlC9kzqIKbwlZh-MhMP9PA&type=embed)](https://app.eraser.io/workspace/xrstnVdrGQO6WDR9CsNM?elements=WlC9kzqIKbwlZh-MhMP9PA)
 ---
 
 ## Features for Users
