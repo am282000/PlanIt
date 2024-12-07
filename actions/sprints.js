@@ -45,39 +45,35 @@ export async function updateSprintStatus(sprintId, newStatus) {
   if (!userId || !orgId) {
     throw new Error("Unauthorized User");
   }
-  try {
-    const sprint = await db.sprint.findUnique({
-      where: {
-        id: sprintId,
-      },
-      include: { project: true },
-    });
-    if (!sprint) {
-      throw new Error("Sprint not found");
-    }
-    if (sprint.project.organizationId !== orgId) {
-      throw new Error("Unautthorized User");
-    }
-    if (orgRole !== "org:admin") {
-      throw new Error("Only admins have permission to change sprint status");
-    }
-
-    const now = new Date();
-    const startDate = new Date(sprint.startDate);
-    const endDate = new Date(sprint.endDate);
-
-    if (newStatus === "ACTIVE" && (now < startDate || now > endDate)) {
-      throw new Error("Cannot start sprint outside of its date range");
-    }
-    if (newStatus === "COMPLETED" && sprint.status !== "ACTIVE") {
-      throw new Error("Can only complete an active sprint");
-    }
-    const updatedSprint = await db.sprint.update({
-      where: { id: sprintId },
-      data: { status: newStatus },
-    });
-    return { success: true, sprint: updatedSprint };
-  } catch (error) {
-    throw new Error(error.message);
+  const sprint = await db.sprint.findUnique({
+    where: {
+      id: sprintId,
+    },
+    include: { project: true },
+  });
+  if (!sprint) {
+    throw new Error("Sprint not found");
   }
+  if (sprint.project.organizationId !== orgId) {
+    throw new Error("Unautthorized User");
+  }
+  if (orgRole !== "org:admin") {
+    throw new Error("Only admins have permission to change sprint status");
+  }
+
+  const now = new Date();
+  const startDate = new Date(sprint.startDate);
+  const endDate = new Date(sprint.endDate);
+
+  if (newStatus === "ACTIVE" && (now < startDate || now > endDate)) {
+    throw new Error("Cannot start sprint outside of its date range");
+  }
+  if (newStatus === "COMPLETED" && sprint.status !== "ACTIVE") {
+    throw new Error("Can only complete an active sprint");
+  }
+  const updatedSprint = await db.sprint.update({
+    where: { id: sprintId },
+    data: { status: newStatus },
+  });
+  return { success: true, sprint: updatedSprint };
 }
