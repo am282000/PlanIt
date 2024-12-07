@@ -153,7 +153,7 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
       )}
       {/* KANBAN BOARD */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 bg-slate-900 p-4 rounded-1g">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4  mt-4 bg-slate-900  rounded-1g max-h-[40rem] overflow-y-auto">
           {statuses.map((column) => (
             <Droppable key={column.key} droppableId={column.key}>
               {(provided) => {
@@ -161,9 +161,9 @@ const SprintBoard = ({ sprints, projectId, orgId }) => {
                   <div
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    className="space-y-2"
+                    className="space-y-2 px-4"
                   >
-                    <h3 className="font-semibold mb-2 text-center">
+                    <h3 className="font-semibold mb-2 text-center p-4 sticky top-0 bg-slate-900 z-10">
                       {column.name}
                     </h3>
                     {/* Issues */}
