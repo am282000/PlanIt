@@ -32,7 +32,7 @@ const ProjectPage = async ({ params }) => {
           />
         </>
       ) : (
-        <div>Create a Sprint from the button above</div>
+        <div>Create a Sprint from the Create New Sprint button</div>
       )}
     </div>
   );
