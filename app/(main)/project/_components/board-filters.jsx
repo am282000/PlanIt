@@ -105,7 +105,7 @@ const BoardFilters = ({ issues, onFilterChange }) => {
               onClick={clearFilters}
               className="flex items-center bg-slate-700"
             >
-              <X className=" h-4 w-4 mr-1" /> Clear Fillters
+              <X className=" h-4 w-4 mr-1" /> Clear Filter
             </Button>
           )}
         </div>
