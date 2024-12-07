@@ -36,8 +36,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }) => {
   } = useFetch(updateSprintStatus);
 
   const handleStatusChange = async (newStatus) => {
-    console.log(newStatus, updatedStatus, updateStatus);
-    updateStatus(sprint.id, newStatus);
+    await updateStatus(sprint.id, newStatus);
   };
 
   useEffect(() => {
