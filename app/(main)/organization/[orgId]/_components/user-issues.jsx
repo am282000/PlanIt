@@ -17,7 +17,7 @@ const UserIssues = async ({ userId }) => {
   return (
     <>
       <h1 className="text-4xl font-bold gradient-title mb-4">My Issues</h1>
-      <Tabs defaultValue="account" className="w-full">
+      <Tabs defaultValue="assigned" className="w-full">
         <TabsList>
           <TabsTrigger value="assigned">Assigned to You</TabsTrigger>
           <TabsTrigger value="reported">Reported by You</TabsTrigger>
