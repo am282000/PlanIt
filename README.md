@@ -22,6 +22,7 @@
   - React Spinners for loading states.
 
 **Features in Action**
+
 ![](public/docs/features.gif)
 
 ---
