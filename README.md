@@ -1,17 +1,14 @@
 # PlanIt Documentation
 
-1. **UI/UX Preview**
+**UI/UX Preview**
+![](public/docs/ss1.png)
 
-   - Place your screenshots or videos showing the user interface and overall design.
+**Project Walkthrough**
+   ![](public/docs/overview.gif)
 
-2. **Features in Action**
-  ![](public/docs/pic1.png)
-
-3. **Project Walkthrough**
-   ![](public/docs/MixtureOpen.gif)
-
-4. **Kanban Board Demo**
-   - Show the drag-and-drop functionality and the management of issues in the Kanban board.
+**Kanban Board Demo**   
+  Show the drag-and-drop functionality and the management of issues in the Kanban board.
+  ![](public/docs/kanban-board.gif)
 
 ## Features
 
@@ -23,6 +20,11 @@
 - **Custom Pages**:
   - 404 Not Found Page.
   - React Spinners for loading states.
+
+**Features in Action**
+![](public/docs/ss2.png)
+![](public/docs/ss3.png)
+![](public/docs/ss4.png)
 
 ---
 
@@ -36,6 +38,9 @@
 
 ---
 
+**Email Invitations**
+![](public/docs/ss5.png)
+
 ## Database Design
 
 - **User Table**: Clerk handles user management with a custom `clerkUserId` field.
@@ -45,11 +50,13 @@
   - Projects have associated sprints (`projectId` as a foreign key).
   - Issues can be linked to projects, sprints, and users via multiple foreign keys.
 - **Data Constraints**:
+
   - One unique key per organization.
   - Cascade delete functionality ensures that deleting a project removes related sprints and issues.
 
-- **ER Diagram** 
-[View on Eraser![](https://app.eraser.io/workspace/xrstnVdrGQO6WDR9CsNM/preview?elements=WlC9kzqIKbwlZh-MhMP9PA&type=embed)](https://app.eraser.io/workspace/xrstnVdrGQO6WDR9CsNM?elements=WlC9kzqIKbwlZh-MhMP9PA)
+- **ER Diagram**
+  [View on Eraser![](https://app.eraser.io/workspace/xrstnVdrGQO6WDR9CsNM/preview?elements=WlC9kzqIKbwlZh-MhMP9PA&type=embed)](https://app.eraser.io/workspace/xrstnVdrGQO6WDR9CsNM?elements=WlC9kzqIKbwlZh-MhMP9PA)
+
 ---
 
 ## Features for Users
