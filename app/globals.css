@@ -96,3 +96,10 @@ body {
   padding-left: 15px !important;
   color: white;
 }
+
+/* To Hide CLERK Watermark */
+.cl-userButtonPopoverFooter,
+.cl-organizationSwitcherPopoverFooter,
+.cl-internal-1dauvpw {
+  display: none;
+}
