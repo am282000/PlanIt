@@ -4,11 +4,11 @@
 ![](public/docs/ss1.png)
 
 **Project Walkthrough**
-   ![](public/docs/overview.gif)
+![](public/docs/overview.gif)
 
-**Kanban Board Demo**   
-  Show the drag-and-drop functionality and the management of issues in the Kanban board.
-  ![](public/docs/kanban-board.gif)
+**Kanban Board Demo**  
+ Show the drag-and-drop functionality and the management of issues in the Kanban board.
+![](public/docs/kanban-board.gif)
 
 ## Features
 
@@ -22,9 +22,7 @@
   - React Spinners for loading states.
 
 **Features in Action**
-![](public/docs/ss2.png)
-![](public/docs/ss3.png)
-![](public/docs/ss4.png)
+![](public/docs/features.gif)
 
 ---
 
@@ -39,7 +37,7 @@
 ---
 
 **Email Invitations**
-![](public/docs/ss5.png)
+![](public/docs/ss2.png)
 
 ## Database Design
 
