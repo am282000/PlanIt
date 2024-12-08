@@ -6,8 +6,13 @@
 **Project Walkthrough**
 ![](public/docs/overview.gif)
 
-**Kanban Board Demo**  
- Show the drag-and-drop functionality and the management of issues in the Kanban board.
+**Kanban Board Demo**
+
+- Drag-and-drop support with `@hello-pangea/dnd`.
+- Cards can be rearranged within a column or moved between columns:
+  - Update issue status and order during these actions.
+  - Handle edge cases for Planned or Completed sprints.
+
 ![](public/docs/kanban-board.gif)
 
 ## Features
@@ -20,6 +25,9 @@
 - **Custom Pages**:
   - 404 Not Found Page.
   - React Spinners for loading states.
+- **Issue Details**: Click on a card to view and manage issue details.
+- **Dynamic Routing**: Redirect to a project page if necessary.
+- **Issue Filtering**: Filter issues by title, assignee, or priority.
 
 **Features in Action**
 
@@ -77,13 +85,6 @@
 - Sprints automatically named, default duration is 14 days.
 - Admins can start, end, or switch between sprints.
 - Sprint statuses: Planned, Active, Ended.
-
-### 4. **Kanban Board**
-
-- Drag-and-drop support with `@hello-pangea/dnd`.
-- Cards can be rearranged within a column or moved between columns:
-  - Update issue status and order during these actions.
-  - Handle edge cases for Planned or Completed sprints.
 
 ---
 
@@ -225,14 +226,6 @@ export default BasicDragDrop;
 
 - **Issue Updates**: Using transactions to ensure API operations are atomic.
 - **Issue Deletion**: Reporters or admins can delete issues; others cannot change priority.
-
----
-
-## UI/UX
-
-- **Issue Details**: Click on a card to view and manage issue details.
-- **Dynamic Routing**: Redirect to a project page if necessary.
-- **Issue Filtering**: Filter issues by title, assignee, or priority.
 
 ---
 
